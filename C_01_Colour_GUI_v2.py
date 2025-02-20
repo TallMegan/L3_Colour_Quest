@@ -33,7 +33,6 @@ class StartGame:
         # create labels and add them to the reference list
         start_labels_ref = []
 
-        # count: count
         for count, item in enumerate(start_labels_list):
             make_label = Label(self.start_frame, text=item[0], font=item[1],
                                fg=item[2],
@@ -102,18 +101,58 @@ class Play:
     def __init__(self, how_many):
         self.play_box = Toplevel()
 
+        # game heading label
         self.game_frame = Frame(self.play_box)
         self.game_frame.grid(pady=10, padx=10)
 
         self.game_heading_label = Label(self.game_frame, text=f"Round 0 of {how_many}",
                                         font=("Arial", "16", "bold"))
-        self.game_heading_label.grid(row=0)
+        self.game_heading_label.grid(row=0, pady=15)
 
+        # score to beat label
+        self.score_to_beat_frame = Frame(self.game_frame)
+        self.score_to_beat_frame.grid(pady=10, padx=10)
+
+        self.score_to_beat_label = Label(self.score_to_beat_frame, text=f"Score to beat: #",
+                                         font=("Arial", "14"), bg="#FFF2CC")
+        self.score_to_beat_label.grid(row=1)
+
+        # game instructions
+        self.choose_a_colour_frame = Frame(self.game_frame)
+        self.choose_a_colour_frame.grid(pady=10, padx=10)
+
+        self.choose_a_colour_label = Label(self.choose_a_colour_frame,
+                                           text=f"Choose a colour below. Good Luck. 🍀",
+                                           font=("Arial", "14"), bg="#D5E8D4")
+        self.choose_a_colour_label.grid(row=2)
+
+        # next round button
+        self.next_round_button = Button(self.game_frame, text="Next Round",
+                                        font=("Arial", "16", "bold"), bg="#0057D8",
+                                        fg="#FFFFFF", width=20)
+        self.next_round_button.grid(row=5)
+
+        # hints and stats buttons
+
+        self.hint_stats_frame = Frame(self.game_frame)
+        self.hint_stats_frame.grid(row=6, padx=10, pady=10)
+
+        self.hints_button = Button(self.hint_stats_frame, text="Hints",
+                                   font=("Arial", "16", "bold"), bg="#FF8000",
+                                   fg="#FFFFFF", width=0)
+        self.hints_button.grid(row=0, column=0)
+
+        self.stats_button = Button(self.hints_button, text="Stats",
+                                   font=("Arial", "16", "bold"), bg="#333333",
+                                   fg="#FFFFFF", width=0)
+        self.stats_button.grid(row=0, column=1)
+
+        # end game button
         self.end_game_button = Button(self.game_frame, text="End Game",
                                       font=("Arial", "16", "bold"),
                                       fg="#FFFFFF", bg="#990000",
                                       command=self.close_play)
-        self.end_game_button.grid(row=1)
+        self.end_game_button.grid(row=7)
 
     def close_play(self):
         # reshow root (ie: choose rounds) and end current
