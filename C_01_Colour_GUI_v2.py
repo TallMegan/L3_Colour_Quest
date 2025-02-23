@@ -133,7 +133,6 @@ class Play:
         self.next_round_button.grid(row=5)
 
         # hints and stats buttons
-
         self.hint_stats_frame = Frame(self.game_frame)
         self.hint_stats_frame.grid(row=6, padx=10, pady=10)
 
@@ -142,7 +141,7 @@ class Play:
                                    fg="#FFFFFF", width=0)
         self.hints_button.grid(row=0, column=0)
 
-        self.stats_button = Button(self.hints_button, text="Stats",
+        self.stats_button = Button(self.hint_stats_frame, text="Stats",
                                    font=("Arial", "16", "bold"), bg="#333333",
                                    fg="#FFFFFF", width=0)
         self.stats_button.grid(row=0, column=1)
