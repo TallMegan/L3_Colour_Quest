@@ -126,6 +126,43 @@ class Play:
                                            font=("Arial", "14"), bg="#D5E8D4")
         self.choose_a_colour_label.grid(row=2)
 
+        # colours labels
+        colours_list = [["#808080"], ["#808080"], ["#808080"], ["#808080"]]
+
+        self.colour_frame = Frame(self.game_frame)
+        self.colour_frame.grid(row=4, padx=10, pady=10)
+
+        def make_colour_buttons(colour_list):
+
+            buttons_made = 0
+            colour_button_list = []
+
+            for item in enumerate(colour_list):
+                # resets the button row
+                button_row = 0
+                button_column = 0
+
+                # makes the button
+                make_button = Button(self.colour_frame, text="Colour Name", font=("Arial", "11"),
+                                     fg=item[1], justify="left", pady=10, padx=20)
+                buttons_made += 1
+
+                # if buttons made is divisible by 2 then makes the button column 1
+                if buttons_made % 2:
+                    button_column = 1
+
+                # once buttons made is more than 2 the button row is set to 1
+                if buttons_made > 2:
+                    button_row = 1
+
+                # allocates the button to the right position
+                make_button.grid(row=button_row, column=button_column, padx=3, pady=3)
+                colour_button_list.append(make_button)
+
+            return colour_button_list
+
+        make_colour_buttons(colours_list)
+
         # next round button
         self.next_round_button = Button(self.game_frame, text="Next Round",
                                         font=("Arial", "16", "bold"), bg="#0057D8",
@@ -138,19 +175,19 @@ class Play:
 
         self.hints_button = Button(self.hint_stats_frame, text="Hints",
                                    font=("Arial", "16", "bold"), bg="#FF8000",
-                                   fg="#FFFFFF", width=0)
-        self.hints_button.grid(row=0, column=0)
+                                   fg="#FFFFFF", width=10)
+        self.hints_button.grid(row=0, column=0, padx=4)
 
         self.stats_button = Button(self.hint_stats_frame, text="Stats",
                                    font=("Arial", "16", "bold"), bg="#333333",
-                                   fg="#FFFFFF", width=0)
-        self.stats_button.grid(row=0, column=1)
+                                   fg="#FFFFFF", width=10)
+        self.stats_button.grid(row=0, column=1, padx=4)
 
         # end game button
         self.end_game_button = Button(self.game_frame, text="End Game",
                                       font=("Arial", "16", "bold"),
                                       fg="#FFFFFF", bg="#990000",
-                                      command=self.close_play)
+                                      width=20, command=self.close_play)
         self.end_game_button.grid(row=7)
 
     def close_play(self):
