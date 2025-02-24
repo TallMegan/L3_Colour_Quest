@@ -105,6 +105,17 @@ class Play:
         self.game_frame = Frame(self.play_box)
         self.game_frame.grid(pady=10, padx=10)
 
+        # body font for most labels
+        body_font = ("Arial", "12")
+
+        # list for label details (text | font | background | row)
+        play_labels_list = [
+            ["Round # of #", ("Arial", "16", "bold"), None, 0],
+            ["Score to beat: #", body_font, "#FFF2CC", 1],
+            ["Choose a colour below. Good Luck 🍀", body_font, "#D5E804", 2],
+            ["You chose, result", body_font, "#D5E8D4", 4]
+        ]
+
         self.game_heading_label = Label(self.game_frame, text=f"Round 0 of {how_many}",
                                         font=("Arial", "16", "bold"))
         self.game_heading_label.grid(row=0, pady=15)
