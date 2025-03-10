@@ -45,7 +45,7 @@ class Play:
     """
 
     def __init__(self, how_many):
-        self.rounds_won = IntVar
+        self.rounds_won = IntVar()
 
         # lists for stats component
 
@@ -117,25 +117,74 @@ class Stats:
                                  height=200)
         self.stats_frame.grid()
 
-        self.stats_heading_label = Label(self.stats_frame,
-                                         text="Stats",
-                                         font=("Arial", "14", "bold"))
-        self.stats_heading_label.grid(row=0)
+        # math to populate stats dialogue
+        rounds_played = len(user_scores)
 
-        hint_text = "To use the program, simply enter the temperature you wish " \
-                    "to convert and then choose to convert " \
-                    "to either degree celsius or Fahrenheit.. \n\n Note that " \
-                    "-273 degrees C (-459 F) is absolute zero (the " \
-                    "coldest possible temperature). If you try to convert a temperature " \
-                    "that is less than -273 " \
-                    "degrees C you will get an error message. To see your calculation " \
-                    "history and export it to a text " \
-                    "file, please click the History / Export button"
+        success_rate = rounds_won / rounds_played * 100
+        total_score = sum(user_scores)
+        max_possible = sum(high_scores)
 
-        self.stat_text_label = Label(self.stats_frame,
-                                     text=hint_text, wraplength=350,
-                                     justify="left")
-        self.stat_text_label.grid(row=1, padx=10)
+        best_score = user_scores[-1]
+        average_score = total_score / rounds_played
+
+        # strings for stats labels
+
+        success_string = (f"Success rate: {rounds_won} / {rounds_played}"
+                          f"({success_rate:.0f}%")
+
+        total_score_string = f"Total score: {total_score}"
+        max_possible_string = f"Maximum possible score: {max_possible}"
+        best_score_string = f"Best score {best_score}"
+
+        # custom comment text and formatting
+        if total_score == max_possible:
+            comment_string = ("Amazing! You got the highest "
+                              "possible score!")
+            comment_colour = "#D5E8D4"
+
+        elif total_score == 0:
+            comment_string = "Oops - you've lost every round!"
+            comment_colour = "#F8CECC"
+            best_score_string = f"Best score: n/a"
+
+        else:
+            comment_string = ""
+            comment_colour = "#F0F0F0"
+
+        average_score_string = f"Average score: {average_score:.0f}\n"
+
+        heading_font = ("Arial", "16", "bold")
+        normal_font = ("Arial", "14")
+        comment_font = ("Arial", "13")
+
+        # label list (text | font | 'Sticky')
+        all_stats_string = [
+            ["Statistics", heading_font, ""],
+            [success_string, normal_font, "W"],
+            [total_score_string, normal_font, "W"],
+            [max_possible_string, normal_font, "W"],
+            [comment_string, comment_font, "W"],
+            ["\nRound Stats", heading_font, ""],
+            [best_score_string, normal_font, "W"],
+        ]
+
+        stats_label_ref_list = []
+        for count, item in enumerate(all_stats_string):
+            self.stats_label = Label(self.stats_frame, text=item[0], font=item[1],
+                                     anchor="w", justify="left",
+                                     padx=30, pady=5)
+
+        # configure comment label background (for all won / all lost)
+        stats_comment_label = stats_label_ref_list[4]
+        stats_comment_label.config(bg=comment_colour)
+
+        self.dismiss_button = Button(self.stats_frame,
+                                     font=("Arial", "16", "bold"),
+                                     text="Dismiss", bg="#333333",
+                                     fg="#FFFFFF", width=20,
+                                     command=partial(self.close_stats,
+                                                     partner))
+        self.dismiss_button.grid(row=8, padx=10, pady=10)
 
         self.dismiss_button = Button(self.stats_frame,
                                      font=("Arial", "12", "bold"),
@@ -143,13 +192,6 @@ class Stats:
                                      fg="#FFFFFF",
                                      command=partial(self.close_stats, partner))
         self.dismiss_button.grid(row=2, padx=10, pady=10)
-
-        # list and loop to set background colour on
-        # everything except the buttons
-        recolour_list = [self.stats_frame, self.stats_heading_label,
-                         self.stat_text_label]
-        for item in recolour_list:
-            item.config(bg=background)
 
     def close_stats(self, partner):
         """
