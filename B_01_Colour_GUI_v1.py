@@ -486,7 +486,7 @@ class Stats:
         # strings for stats labels
 
         success_string = (f"Success rate: {rounds_won} / {rounds_played}"
-                          f"({success_rate:.0f}%")
+                          f"({success_rate:.0f}%)")
 
         total_score_string = f"Total score: {total_score}"
         max_possible_string = f"Maximum possible score: {max_possible}"
@@ -515,13 +515,13 @@ class Stats:
 
         # label list (text | font | 'Sticky')
         all_stats_string = [
-            ["Statistics", heading_font, ""],
-            [success_string, normal_font, "W"],
-            [total_score_string, normal_font, "W"],
-            [max_possible_string, normal_font, "W"],
-            [comment_string, comment_font, "W"],
-            ["\nRound Stats", heading_font, ""],
-            [best_score_string, normal_font, "W"],
+            ["Statistics", heading_font, "", 0],
+            [success_string, normal_font, "W", 1],
+            [total_score_string, normal_font, "W", 2],
+            [max_possible_string, normal_font, "W", 3],
+            [comment_string, comment_font, "W", 4],
+            ["\nRound Stats", heading_font, "", 5],
+            [best_score_string, normal_font, "W", 6],
         ]
 
         stats_label_ref_list = []
@@ -529,6 +529,8 @@ class Stats:
             self.stats_label = Label(self.stats_frame, text=item[0], font=item[1],
                                      anchor="w", justify="left",
                                      padx=30, pady=5)
+
+            self.stats_label.grid(row=item[3])
 
             stats_label_ref_list.append(self.stats_label)
 
