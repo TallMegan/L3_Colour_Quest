@@ -349,6 +349,10 @@ class Play:
             result_bg = "#82B366"
             self.all_scores_list.append(score)
 
+            rounds_won = self.rounds_won.get()
+            rounds_won += 1
+            self.rounds_won.set(rounds_won)
+
         else:
             result_text = f"Oops {colour_name} ({score}) is less than the target."
             result_bg = "#F8CECC"
